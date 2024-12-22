@@ -10,4 +10,5 @@ export default [
   pluginJs.configs.recommended,
   // eslintConfigPrettier,
   eslintPluginPrettierRecommended,
+  { ignores: ['/.git', '/.vscode', 'dist/*'] },
 ];
