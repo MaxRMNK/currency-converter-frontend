@@ -8,25 +8,30 @@
   <title>Команда 2 | Хакатон "Конвертация валют" | Яндекс.Практикум</title>
 </head>
 
-<body class="page-container">
+<body class="page">
   <!-- <div id="app"></div>
   <script type="module" src="/src/main.js"></script> -->
 
-  <div class="page">
+  <div class="page-container">
+
     <header class="header">
-      <h1 class="header__title">Currency Converter</h1>
-      <ul class="social-link">
-        <li class="list-item">
-          <a href="#" class="social-link social-link_vk">vk</a>
+      <a href="/" class="header__logo">
+        <h1 class="header__title">Currency Converter</h1>
+      </a>
+
+      <ul class="social-links">
+        <li class="social-links__list-item">
+          <a href="#" class="social-links__link social-links__link_vk" rel="noreferrer noopener" title="Вконтакте"></a>
         </li>
-        <li class="list-item">
-          <a href="#" class="social-link social-link_tg">tg</a>
+        <li class="social-links__list-item">
+          <a href="#" class="social-links__link social-links__link_tg" rel="noreferrer noopener" title="Телеграм"></a>
         </li>
       </ul>
     </header>
 
-    <main class="converter-container">
-      <p class="converter-description">
+    <main class="content">
+
+      <p class="description">
         Все переводы курсов конвертер осуществляет на основе стоимости валют
         по данным ЦБ РФ.
       </p>
@@ -34,20 +39,19 @@
       <section class="converter">
         <div class="currency currency_source">
           <h2 class="currency__title">У меня есть</h2>
-
-          <div class="converter-input">
+          <div class="converter__input">
             <div class="radio">
               <label class="radio__label radio__label_rub">
-                <input class="radio__input" type="radio" name="currency-source" id="rub" value="rub" checked />
-                RUB
+                <input class="radio__input" type="radio" name="source" id="rub" value="rub" checked />
+                <span class="radio_title radio_title_rub">RUB</span>
               </label>
               <label class="radio__label radio__label_usd">
-                <input class="radio__input" type="radio" name="currency-source" id="usd" value="usd" />
-                USD
+                <input class="radio__input" type="radio" name="source" id="usd" value="usd" />
+                <span class="radio_title radio_title_usd">USD</span>
               </label>
               <label class="radio__label radio__label_eur">
-                <input class="radio__input" type="radio" name="currency-source" id="eur" value="eur" />
-                EUR
+                <input class="radio__input" type="radio" name="source" id="eur" value="eur" />
+                <span class="radio_title radio_title_eur">EUR</span>
               </label>
             </div>
 
@@ -58,33 +62,34 @@
         </div>
 
         <div class="swap-container">
-          <button class="converter-swap" type="button" name="swap"></button>
+          <button class="swap-button" type="button" name="swap"></button>
         </div>
 
         <div class="currency currency_result">
           <h2 class="currency__title">Я получу</h2>
-          <div class="converter-input">
+          <div class="converter__input">
             <div class="radio">
               <label class="radio__label radio__label_rub">
-                <input class="radio__input" type="radio" name="currency-result" id="rub" value="rub" />
-                RUB
+                <input class="radio__input" type="radio" name="result" id="rub" value="rub" checked />
+                <span class="radio_title radio_title_rub">RUB</span>
               </label>
               <label class="radio__label radio__label_usd">
-                <input class="radio__input" type="radio" name="currency-result" id="usd" value="usd" checked />
-                USD
+                <input class="radio__input" type="radio" name="result" id="usd" value="usd" />
+                <span class="radio_title radio_title_usd">USD</span>
               </label>
               <label class="radio__label radio__label_eur">
-                <input class="radio__input" type="radio" name="currency-result" id="eur" value="eur" />
-                EUR
+                <input class="radio__input" type="radio" name="result" id="eur" value="eur" />
+                <span class="radio_title radio_title_eur">EUR</span>
               </label>
             </div>
 
-            <input class="currency__value" type="text" value="1" placeholder="0" />
+            <input class="currency__value" type="text" value="100" placeholder="0" />
 
-            <p class="currency__info">1 ₽ = 100 $</p>
+            <p class="currency__info">1 $ = 0.01 ₽</p>
           </div>
         </div>
       </section>
+
     </main>
   </div>
 
