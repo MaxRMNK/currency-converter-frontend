@@ -43,7 +43,6 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(172, 172, 172, 1);
-}
 
   .header__logo {
     padding: 0 0 0 44px;
@@ -58,12 +57,13 @@
     text-decoration: none;
     transition: opacity linear .1s;
     opacity: 1;
-  }
 
-  .header__logo:hover {
-    text-decoration: none;
-    opacity: .6;
+    &:hover {
+      text-decoration: none;
+      opacity: .6;
+    }
   }
+}
 
   .header__title {
     margin: 0;
@@ -96,7 +96,6 @@
   }
 
   .social-links__link {
-    /* background-color: #cc0; */
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 32px;
@@ -106,10 +105,10 @@
     text-decoration: none;
     transition: opacity linear .1s;
     opacity: 1;
-  }
 
-  .social-links__link:hover {
-    opacity: .6;
+    &:hover {
+      opacity: .6;
+    }
   }
 
   .social-links__link_vk {
@@ -192,11 +191,11 @@
   transition: opacity linear .1s;
   opacity: 1;
 
+  &:hover {
+    opacity: .8;
+  }
 }
 
-.swap-button:hover {
-  opacity: .8;
-}
 
 
 .converter__input {
@@ -227,19 +226,19 @@
 	user-select: none;
   transition: opacity linear .1s;
   opacity: 1;
-}
 
-  .radio__label:last-child{
+  &:last-child{
     border-right: none;
   }
-
-  .radio__label:has(.radio__input:checked) {
+  
+  &:has(.radio__input:checked) {
     background-color: rgba(205, 225, 34, 1);
   }
-
-  .radio__label:hover {
+  
+  &:hover {
     opacity: .6;
   }
+}
 
 
 .radio__input {
@@ -282,14 +281,14 @@
   font-weight: 500;
   font-size: 36px;
   line-height: 1.2;
-}
-
-.currency__value::placeholder {
-  color: #ccc;
-}
-
-.currency__value:focus {
-  border-bottom: 1px solid rgba(0, 0, 0, 1);
+  
+  &:focus {
+    border-bottom: 1px solid rgba(0, 0, 0, 1);
+  }
+  
+  &::placeholder {
+    color: #ccc;
+  }
 }
 
 .currency__info {
