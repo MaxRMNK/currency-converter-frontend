@@ -1,5 +1,9 @@
 import './index.css';
 
+import { swapCurrencies } from "../swap";
+
+swapButton.addEventListener("click", swapCurrencies);
+
 const sourceInput = document.querySelector('.currency__value.source');
 const resultInput = document.querySelector('.currency__value.result');
 const sourceInfo = document.querySelector('.currency__info.source');
