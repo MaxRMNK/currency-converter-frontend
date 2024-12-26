@@ -14,23 +14,23 @@ const resultRadios = document.querySelectorAll('.radio__input[name="result"]');
 async function fetchExchangeRate(from, to, amount) {
   
   // Наше API (расскоментить при готовом бэке)
-  const response = await fetch(`http://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amount}`);
+  // const response = await fetch(`http://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amount}`);
   
 
   // Тестовый API удалить строчки от сюда
-  // const myHeaders = new Headers();
-  // myHeaders.append("apikey", "o6ucw6SxuL6ioWLv6DYCzmYMuXndpfgG");
+  const myHeaders = new Headers();
+  myHeaders.append("apikey", "o6ucw6SxuL6ioWLv6DYCzmYMuXndpfgG");
 
-  // const requestOptions = {
-  //   method: 'GET',
-  //   redirect: 'follow',
-  //   headers: myHeaders,
-  // };
+  const requestOptions = {
+    method: 'GET',
+    redirect: 'follow',
+    headers: myHeaders,
+  };
 
-  // const response = await fetch(
-  //   `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`,
-  //   requestOptions
-  // );
+  const response = await fetch(
+    `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`,
+    requestOptions
+  );
   // до сюда
 
   const data = await response.json();
@@ -65,8 +65,10 @@ async function updateConversion() {
 // Инвертирование по кнопке
 swapButton.addEventListener('click', () => {
   // ту должна быть функция инверсии значений
+  swapCurrencies;
   console.log('Swap button clicked');
 });
+// swapButton.addEventListener("click", swapCurrencies);
 
 // Обработчики для изменения радиокнопок и ввода значений
 sourceRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
@@ -74,6 +76,3 @@ resultRadios.forEach((radio) => radio.addEventListener('change', updateConversio
 sourceInput.addEventListener('input', updateConversion);
 
 updateConversion();
-
-
-swapButton.addEventListener("click", swapCurrencies);
