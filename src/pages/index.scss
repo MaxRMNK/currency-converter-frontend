@@ -32,14 +32,14 @@ $border-color: rgba(172, 172, 172, 1);
   min-width: 320px;
   min-height: 100vh;
   background-color: $bg-page-color;
-  
-  &-container {
-    max-width: 900px;
-    margin: 0 auto;
-    /* padding: 0 50px; */
-    display: flex;
-    flex-direction: column;
-  }
+}
+
+.page-container {
+  max-width: 900px;
+  margin: 0 auto;
+  /* padding: 0 50px; */
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -51,7 +51,7 @@ $border-color: rgba(172, 172, 172, 1);
   align-items: center;
   border-bottom: 1px solid $border-color;
 
-  .header__logo {
+  &__logo {
     padding: 0 0 0 44px;
     height: 40px;
     display: flex;
@@ -70,39 +70,36 @@ $border-color: rgba(172, 172, 172, 1);
       opacity: .6;
     }
   }
-}
 
-  .header__title {
+  &__title {
     margin: 0;
     padding: 0;
     width: 150px;
-    // color: rgba(51, 51, 51, 1);
     font-family: $font-geist;
     font-weight: 700;
     font-size: 16px;
     line-height: 1.2;  
     text-transform: uppercase;
   }
+}
 
-  .social-links {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    display: flex;
-    gap: 20px;
-  }
+.social-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 20px;
 
-  .social-links__list-item {
+  &__list-item {
     cursor: pointer;
     width: 32px;
     height: 32px;
-    /* border-radius: 50%; */
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .social-links__link {
+  &__link {
     background-repeat: no-repeat;
     background-position: left center;
     background-size: 32px;
@@ -118,15 +115,14 @@ $border-color: rgba(172, 172, 172, 1);
     }
   }
 
-  .social-links__link_vk {
+  &__link_vk {
     background-image: url('/vk-icon.svg');
   }
-  .social-links__link_tg {
+
+  &__link_tg {
     background-image: url('/tg-icon.svg');
   }
-
-
-
+}
 
 .content {
   flex-grow: 2;
@@ -149,15 +145,12 @@ $border-color: rgba(172, 172, 172, 1);
 }
 
 .currency {
-  /* width: 100%;
-  max-width: 440px; */
   width: 440px;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   padding: 40px;
   box-sizing: border-box;
 }
-
 
 .currency__title {
   margin: 0 0 20px 0;
@@ -178,9 +171,6 @@ $border-color: rgba(172, 172, 172, 1);
   height: 60px;
   box-sizing: content-box;
   background-color: rgba(243, 243, 244, 1);
-  /* display: flex;
-  justify-content: stretch;
-  align-content: stretch; */
 }
 
 .swap-button {
@@ -206,7 +196,6 @@ $border-color: rgba(172, 172, 172, 1);
 
 
 .converter__input {
-  /* background-color: #cfc; */
   border: 1px solid $border-color;
   border-radius: 20px;
   box-sizing: border-box;
@@ -252,7 +241,7 @@ $border-color: rgba(172, 172, 172, 1);
   display: none;
 }
 
-.radio_title {
+.radio__title {
   padding: 0 0 0 36px;
   height: 30px;
   display: flex;
@@ -265,15 +254,18 @@ $border-color: rgba(172, 172, 172, 1);
   background-repeat: no-repeat;
   background-position: left center;
   background-size: 30px 30px;
-}
-.radio_title_rub {
-  background-image: url('/rub.png');
-}
-.radio_title_usd {
-  background-image: url('/usd.png');
-}
-.radio_title_eur {
-  background-image: url('/eur.png');
+  
+  &_rub {
+    background-image: url('/rub.png');
+  }
+  
+  &_usd {
+    background-image: url('/usd.png');
+  }
+  
+  &_eur {
+    background-image: url('/eur.png');
+  }
 }
 
 
