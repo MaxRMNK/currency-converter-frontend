@@ -1,16 +1,23 @@
 @import url("../vendor/normalize.css");
 @import url("../vendor/fonts/fonts.css");
 
+$font-lack: "Lack", Arial, Helvetica, sans-serif;
+$font-geist: "Geist", Arial, Helvetica, sans-serif;
+$font-funnel-sans: "FunnelSans", Arial, Helvetica, sans-serif;
+
+$font-color: rgba(51, 51, 51, 1);
+
+$bg-page-color: rgba(243, 243, 244, 1);
+$border-color: rgba(172, 172, 172, 1);
+
+
 :root {
-  font-family: "Lack", Arial, Helvetica, sans-serif;
+  font-family: $font-lack;
   font-weight: 400;
   font-size: 16px;
   line-height: 1.2;
-
-  /* color-scheme: light dark; */
-  color: rgba(51, 51, 51, 1);
-  background-color: rgba(255, 255, 255, 1);
-
+  color: $font-color;
+  // background-color: rgba(255, 255, 255, 1);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -24,7 +31,7 @@
   width: 100%;
   min-width: 320px;
   min-height: 100vh;
-  background-color: rgba(243, 243, 244, 1);
+  background-color: $bg-page-color;
 }
 
 .page-container {
@@ -42,7 +49,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(172, 172, 172, 1);
+  border-bottom: 1px solid $border-color;
 
   .header__logo {
     padding: 0 0 0 44px;
@@ -69,8 +76,8 @@
     margin: 0;
     padding: 0;
     width: 150px;
-    color: rgba(51, 51, 51, 1);
-    font-family: "Geist", Arial, Helvetica, sans-serif;
+    // color: rgba(51, 51, 51, 1);
+    font-family: $font-geist;
     font-weight: 700;
     font-size: 16px;
     line-height: 1.2;  
@@ -200,7 +207,7 @@
 
 .converter__input {
   /* background-color: #cfc; */
-  border: 1px solid rgba(172, 172, 172, 1);
+  border: 1px solid $border-color;
   border-radius: 20px;
   box-sizing: border-box;
   overflow: hidden;
@@ -213,14 +220,14 @@
   margin: 0 0 30px 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border-bottom: 1px solid rgba(172, 172, 172, 1);
+  border-bottom: 1px solid $border-color;
 }
 
 .radio__label {
   padding: 12px 0;
   display: flex;
   justify-content: center;
-  border-right: 1px solid rgba(172, 172, 172, 1);
+  border-right: 1px solid $border-color;
   box-sizing: border-box;
 	cursor: pointer;
 	user-select: none;
@@ -275,9 +282,9 @@
   padding: 0 6px;
   outline: none;
   border: none;
-  border-bottom: 1px solid rgba(172, 172, 172, 1);
+  border-bottom: 1px solid $border-color;
   background-color: transparent;
-  font-family: "Geist", Arial, Helvetica, sans-serif;
+  font-family: $font-geist;
   font-weight: 500;
   font-size: 36px;
   line-height: 1.2;
