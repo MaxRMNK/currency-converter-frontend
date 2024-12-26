@@ -21,4 +21,38 @@ export function swapCurrencies() {
   }
 }
 
+function preventSameCurrency(event) {
+  const sourceChecked = Array.from(sourceRadios).find((radio) => radio.checked);
+  const resultChecked = Array.from(resultRadios).find((radio) => radio.checked);
+
+  if (
+    event.target.name === "source" &&
+    sourceChecked.value === resultChecked.value
+  ) {
+    const newResult = Array.from(resultRadios).find(
+      (radio) => radio.value !== sourceChecked.value
+    );
+    if (newResult) {
+      newResult.checked = true;
+    }
+  } else if (
+    event.target.name === "result" &&
+    sourceChecked.value === resultChecked.value
+  ) {
+    const newSource = Array.from(sourceRadios).find(
+      (radio) => radio.value !== resultChecked.value
+    );
+    if (newSource) {
+      newSource.checked = true;
+    }
+  }
+}
+
 swapButton.addEventListener("click", swapCurrencies);
+
+sourceRadios.forEach((radio) =>
+  radio.addEventListener("change", preventSameCurrency)
+);
+resultRadios.forEach((radio) =>
+  radio.addEventListener("change", preventSameCurrency)
+);
