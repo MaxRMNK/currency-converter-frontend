@@ -32,14 +32,14 @@ $border-color: rgba(172, 172, 172, 1);
   min-width: 320px;
   min-height: 100vh;
   background-color: $bg-page-color;
-}
-
-.page-container {
-  max-width: 900px;
-  margin: 0 auto;
-  /* padding: 0 50px; */
-  display: flex;
-  flex-direction: column;
+  
+  &-container {
+    max-width: 900px;
+    margin: 0 auto;
+    /* padding: 0 50px; */
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 

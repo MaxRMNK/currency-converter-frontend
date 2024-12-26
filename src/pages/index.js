@@ -1,8 +1,6 @@
-import './index.css';
+import './index.scss';
 
 import { swapCurrencies } from "../swap";
-
-swapButton.addEventListener("click", swapCurrencies);
 
 const sourceInput = document.querySelector('.currency__value.source');
 const resultInput = document.querySelector('.currency__value.result');
@@ -76,3 +74,6 @@ resultRadios.forEach((radio) => radio.addEventListener('change', updateConversio
 sourceInput.addEventListener('input', updateConversion);
 
 updateConversion();
+
+
+swapButton.addEventListener("click", swapCurrencies);
