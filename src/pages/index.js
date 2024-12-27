@@ -53,6 +53,7 @@ async function updateConversion() {
 
   try {
     const data = await fetchExchangeRate(sourceCurrency, resultCurrency, sourceValue);
+
     const rate = data.info.rate;
     resultInput.value = data.result.toFixed(2);
     sourceInfo.textContent = `1 ${sourceCurrency} = ${rate.toFixed(2)} ${resultCurrency}`;
@@ -64,9 +65,9 @@ async function updateConversion() {
 
 // Инвертирование по кнопке
 swapButton.addEventListener('click', () => {
-  swapCurrencies;
+  swapCurrencies();
   updateConversion();
-  console.log('Swap button clicked');
+  // console.log('Swap button clicked');
 });
 // swapButton.addEventListener('click', swapCurrencies);
 
