@@ -53,7 +53,10 @@ async function updateConversion() {
 
   try {
     const data = await fetchExchangeRate(sourceCurrency, resultCurrency, amount);
-    const rate = data.info.rate;
+    // Для сервиса api.apilayer.com:
+    // const rate = data.info.rate;
+    // Для НАШЕГО API:
+    const rate = data.result;
     resultInput.value = data.result.toFixed(2);
     sourceInfo.textContent = `1 ${sourceCurrency} = ${rate.toFixed(2)} ${resultCurrency}`;
     resultInfo.textContent = `1 ${resultCurrency} = ${(1 / rate).toFixed(2)} ${sourceCurrency}`;
