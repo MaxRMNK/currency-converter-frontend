@@ -66,7 +66,7 @@ async function updateConversion() {
 swapButton.addEventListener('click', () => {
   swapCurrencies;
   updateConversion();
-  console.log('Swap button clicked');
+  // console.log('Swap button clicked');
 });
 // swapButton.addEventListener('click', swapCurrencies);
 

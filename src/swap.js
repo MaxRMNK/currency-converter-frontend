@@ -5,14 +5,11 @@ const resultRadios = document.querySelectorAll('input[name="result"]');
 let valueSource = Array.from(sourceRadios).find((radio) => radio.checked).value;
 let valueResult = Array.from(resultRadios).find((radio) => radio.checked).value;
 
-
 export function swapCurrencies() {
   let selectedSource = Array.from(sourceRadios).find((radio) => radio.checked);
   let selectedResult = Array.from(resultRadios).find((radio) => radio.checked);
 
   if (selectedSource && selectedResult) {
-    const tempValue = selectedSource.value;
-
     selectedSource.checked = false;
     selectedResult.checked = false;
 
@@ -21,7 +18,7 @@ export function swapCurrencies() {
     );
     
     const newResult = Array.from(resultRadios).find(
-      (radio) => radio.value === tempValue
+      (radio) => radio.value === selectedSource.value
     );
 
     newSource.checked = true;
