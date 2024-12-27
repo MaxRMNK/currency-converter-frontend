@@ -61,6 +61,7 @@ $border-focus-color: rgba(0, 0, 0, 1);
     background-position: left center;
     background-size: 40px;
     text-decoration: none;
+    color: $font-color;
     transition: opacity linear .1s;
     opacity: 1;
 
