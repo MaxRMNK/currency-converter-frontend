@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { swapCurrencies } from "../swap";
+import { swapCurrencies } from "../components/swap";
 
 const sourceInput = document.querySelector('.currency__value.source');
 const resultInput = document.querySelector('.currency__value.result');
@@ -12,10 +12,8 @@ const swapButton = document.querySelector('.swap-button');
 
 // Получение данных курса валют
 async function fetchExchangeRate(from, to, amount) {
-  
   // Наше API (расскоментить при готовом бэке)
   const response = await fetch(`https://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amount}`);
-  
 
   // Тестовый API удалить строчки от сюда
   // const myHeaders = new Headers();
