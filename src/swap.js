@@ -1,4 +1,4 @@
-const swapButton = document.querySelector('.swap-button');
+// const swapButton = document.querySelector('.swap-button');
 const sourceRadios = document.querySelectorAll('input[name="source"]');
 const resultRadios = document.querySelectorAll('input[name="result"]');
 
@@ -65,8 +65,7 @@ function preventSameCurrency(event) {
   }
 }
 
-
-swapButton.addEventListener('click', swapCurrencies);
+// swapButton.addEventListener('click', swapCurrencies);
 
 sourceRadios.forEach((radio) =>
   radio.addEventListener('change', preventSameCurrency)
