@@ -1,6 +1,6 @@
 import './index.scss';
 
-import { swapCurrencies } from "../swap";
+import { swapCurrencies } from "../components/swap";
 
 const sourceInput = document.querySelector('.currency__value.source');
 const resultInput = document.querySelector('.currency__value.result');
@@ -9,6 +9,12 @@ const resultInfo = document.querySelector('.currency__info.result');
 const sourceRadios = document.querySelectorAll('.radio__input[name="source"]');
 const resultRadios = document.querySelectorAll('.radio__input[name="result"]');
 const swapButton = document.querySelector('.swap-button');
+
+const symbol = {
+  'RUB': '₽',
+  'USD': '$',
+  'EUR': '€',
+};
 
 // Получение данных курса валют
 async function fetchExchangeRate(from, to, amount) {
@@ -111,6 +117,7 @@ swapButton.addEventListener('click', () => {
 // Обработчики для изменения радиокнопок и ввода значений
 sourceRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
 resultRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
+
 sourceInput.addEventListener('input', updateConversion);
 
 validateInput(sourceInput);
