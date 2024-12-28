@@ -16,10 +16,47 @@ const symbol = {
   'EUR': '€',
 };
 
-// Получение данных курса валют
+// Замена точки на запятую
+function formatValue(value) {
+  return value.toString().replace(/\./g, ',');
+}
+
+// Ограничение ввода в поле
+function validateInput(inputElement) {
+  inputElement.addEventListener('keydown', (event) => {
+    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ','];
+    const isDigit = /\d/.test(event.key);
+
+    if (!isDigit && !allowedKeys.includes(event.key)) {
+      event.preventDefault();
+    }
+
+    if (event.key === ',') {
+      const value = inputElement.value;
+      if (value.includes(',')) {
+        event.preventDefault();
+      }
+    }
+  });
+
+  inputElement.addEventListener('input', () => {
+    let value = inputElement.value;
+
+    value = value.replace(/[^\d,]/g, '');
+
+    const parts = value.split(',');
+    if (parts.length > 2) {
+      value = parts[0] + ',' + parts.slice(1).join('');
+    }
+
+    inputElement.value = value;
+  });
+}
+
+// Получение данных курса
 async function fetchExchangeRate(from, to, amount) {
-  // Преобразование запятой в точку перед отправкой
   const amountWithDot = String(amount).replace(',', '.');
+  // console.log(amountWithDot)
 
   // Наше API (расскоментить при готовом бэке)
   const response = await fetch(`https://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amountWithDot}`);
@@ -44,29 +81,6 @@ async function fetchExchangeRate(from, to, amount) {
   return data;
 }
 
-// Замена точки на запятую
-function formatValue(value) {
-  return value.toString().replace(/\./g, ',');
-}
-
-// Ограничение ввода в поле
-function validateInput(inputElement) {
-  inputElement.addEventListener('input', (event) => {
-    let value = inputElement.value;
-
-    // Удаление всех символы, кроме цифр и запятой
-    value = value.replace(/[^\d,]/g, '');
-
-    // Удаление лишних запятых
-    const parts = value.split(',');
-    if (parts.length > 2) {
-      value = parts[0] + ',' + parts.slice(1).join('');
-    }
-
-    inputElement.value = value;
-  });
-}
-
 // Обновление данных конвертации
 async function updateConversion(start = 'left') {
 
@@ -89,7 +103,6 @@ async function updateConversion(start = 'left') {
     toCurrency = resultCurrency;
   }
 
-  // Проверка, если введенное значение пустое или только запятая
   if (!initialValue || initialValue === ',') {
     start === 'right' 
       ? sourceInput.value = 0 
@@ -99,12 +112,10 @@ async function updateConversion(start = 'left') {
     return;
   }
 
-  // Проверка, если после запятой нет цифры не отправляем запрос
   if (initialValue.includes(',') && !/\d/.test(initialValue.split(',')[1])) {
     return;
   }
 
-  // Преобразование строки в число для отправки
   const numericValue = parseFloat(initialValue.replace(',', '.'));
 
   if (isNaN(numericValue) || sourceCurrency === resultCurrency) {
@@ -126,9 +137,6 @@ async function updateConversion(start = 'left') {
     const rate = data.info.rate;
     sourceInfo.textContent = formatValue(`1 ${symbol[fromCurrency]} = ${rate.toFixed(2)} ${symbol[toCurrency]}`);
     resultInfo.textContent = formatValue(`1 ${symbol[toCurrency]} = ${(1 / rate).toFixed(2)} ${symbol[fromCurrency]}`);
-    // resultInput.value = formatValue(data.result.toFixed(2));
-    // sourceInfo.textContent = formatValue(`1 ${sourceCurrency} = ${rate.toFixed(2)} ${resultCurrency}`);
-    // resultInfo.textContent = formatValue(`1 ${resultCurrency} = ${(1 / rate).toFixed(2)} ${sourceCurrency}`);
   } catch (error) {
     console.error('Ошибка получения данных:', error);
   }
