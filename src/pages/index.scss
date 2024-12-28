@@ -89,6 +89,8 @@ $border-focus-color: rgba(0, 0, 0, 1);
   list-style: none;
   display: flex;
   gap: 20px;
+  color: #fcc;
+
 
   &__list-item {
     cursor: pointer;
