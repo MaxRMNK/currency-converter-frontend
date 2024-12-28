@@ -56,7 +56,7 @@ function validateInput(inputElement) {
 // Получение данных курса
 async function fetchExchangeRate(from, to, amount) {
   const amountWithDot = String(amount).replace(',', '.');
-  console.log(amountWithDot)
+  // console.log(amountWithDot)
 
   // Наше API (расскоментить при готовом бэке)
   const response = await fetch(`https://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amountWithDot}`);
@@ -137,9 +137,6 @@ async function updateConversion(start = 'left') {
     const rate = data.info.rate;
     sourceInfo.textContent = formatValue(`1 ${symbol[fromCurrency]} = ${rate.toFixed(2)} ${symbol[toCurrency]}`);
     resultInfo.textContent = formatValue(`1 ${symbol[toCurrency]} = ${(1 / rate).toFixed(2)} ${symbol[fromCurrency]}`);
-    // resultInput.value = formatValue(data.result.toFixed(2));
-    // sourceInfo.textContent = formatValue(`1 ${sourceCurrency} = ${rate.toFixed(2)} ${resultCurrency}`);
-    // resultInfo.textContent = formatValue(`1 ${resultCurrency} = ${(1 / rate).toFixed(2)} ${sourceCurrency}`);
   } catch (error) {
     console.error('Ошибка получения данных:', error);
   }
