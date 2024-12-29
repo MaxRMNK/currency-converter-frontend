@@ -62,12 +62,12 @@ $border-focus-color: rgba(0, 0, 0, 1);
     background-size: 40px;
     text-decoration: none;
     color: $font-color;
-    transition: opacity linear .1s;
+    transition: opacity linear 0.1s;
     opacity: 1;
 
     &:hover {
       text-decoration: none;
-      opacity: .6;
+      opacity: 0.6;
     }
   }
 
@@ -110,10 +110,10 @@ $border-focus-color: rgba(0, 0, 0, 1);
     // background-size: 32px;
     color: $font-color;
     opacity: 1;
-    transition: opacity linear .1s;
+    transition: opacity linear 0.1s;
 
     &:hover {
-      opacity: .6;
+      opacity: 0.6;
     }
   }
 
@@ -194,11 +194,11 @@ $border-focus-color: rgba(0, 0, 0, 1);
   background-image: url('/icon-swap.svg');
   background-repeat: no-repeat;
   background-position: center;
-  transition: opacity linear .1s;
+  transition: opacity linear 0.1s;
   opacity: 1;
 
   &:hover {
-    opacity: .8;
+    opacity: 0.8;
   }
 }
 
@@ -227,7 +227,9 @@ $border-focus-color: rgba(0, 0, 0, 1);
   box-sizing: border-box;
 	cursor: pointer;
 	user-select: none;
-  transition: opacity linear .1s;
+  transition: 
+    opacity linear 0.1s, 
+    background-color linear 0.1s;
   opacity: 1;
 
   &:last-child{
@@ -239,7 +241,8 @@ $border-focus-color: rgba(0, 0, 0, 1);
   }
   
   &:hover {
-    opacity: .6;
+    background-color: $radio-button-color;
+    opacity: 0.6;
   }
 }
 
