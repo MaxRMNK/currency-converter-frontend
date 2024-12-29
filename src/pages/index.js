@@ -21,63 +21,46 @@ function formatValue(value) {
   return value.toString().replace(/\./g, ',');
 }
 
-// Ограничение ввода в поле
-function validateInput(inputElement) {
-  inputElement.addEventListener('keydown', (event) => {
-    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ','];
-    const isDigit = /\d/.test(event.key);
+function handleKeyDown(event) {
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ','];
+  const isDigit = /\d/.test(event.key);
 
-    if (!isDigit && !allowedKeys.includes(event.key)) {
+  if (!isDigit && !allowedKeys.includes(event.key)) {
+    event.preventDefault();
+  }
+
+  if (event.key === ',') {
+    const value = event.target.value;
+    if (value.includes(',')) {
       event.preventDefault();
     }
+  }
+}
 
-    if (event.key === ',') {
-      const value = inputElement.value;
-      if (value.includes(',')) {
-        event.preventDefault();
-      }
-    }
-  });
+function handleInput(event) {
+  let value = event.target.value;
 
-  inputElement.addEventListener('input', () => {
-    let value = inputElement.value;
+  value = value.replace(/[^\d,]/g, '');
 
-    value = value.replace(/[^\d,]/g, '');
+  const parts = value.split(',');
+  if (parts.length > 2) {
+    value = parts[0] + ',' + parts.slice(1).join('');
+  }
 
-    const parts = value.split(',');
-    if (parts.length > 2) {
-      value = parts[0] + ',' + parts.slice(1).join('');
-    }
+  event.target.value = value;
+}
 
-    inputElement.value = value;
-  });
+// Ограничение ввода в поле
+function validateInput(inputElement) {
+  inputElement.addEventListener('keydown', handleKeyDown);
+  inputElement.addEventListener('input', handleInput);
 }
 
 // Получение данных курса
 async function fetchExchangeRate(from, to, amount) {
   const amountWithDot = String(amount).replace(',', '.');
-  // console.log(amountWithDot)
-
-  // Наше API (расскоментить при готовом бэке)
   const response = await fetch(`https://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amountWithDot}`);
-  
-  // Тестовый API удалить строчки от сюда
-  // const myHeaders = new Headers();
-  // myHeaders.append("apikey", "o6ucw6SxuL6ioWLv6DYCzmYMuXndpfgG");
-
-  // const requestOptions = {
-  //   method: 'GET',
-  //   redirect: 'follow',
-  //   headers: myHeaders,
-  // };
-
-  // const response = await fetch(
-  //   `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`,
-  //   requestOptions
-  // );
-  // до сюда
-
-  const data = await response.json();
+    const data = await response.json();
   return data;
 }
 
