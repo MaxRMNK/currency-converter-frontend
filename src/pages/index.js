@@ -21,8 +21,9 @@ function formatValue(value) {
   return value.toString().replace(/\./g, ',');
 }
 
+// Ограничение нажатия клавиш для контроля за вводимыми данными
 function handleKeyDown(event) {
-  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ','];
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ',', '.'];
   const isDigit = /\d/.test(event.key);
 
   if (!isDigit && !allowedKeys.includes(event.key)) {
@@ -37,12 +38,15 @@ function handleKeyDown(event) {
   }
 }
 
+// Форматирование: Удаление любых символов кроме цифр и одной запятой
 function handleInput(event) {
   let value = event.target.value;
 
-  value = value.replace(/[^\d,]/g, '');
+  value = value.replace(/[^\d,\.]/g, '').replace(/\./g, ',');
 
   const parts = value.split(',');
+  console.log('parts', parts);
+  
   if (parts.length > 2) {
     value = parts[0] + ',' + parts.slice(1).join('');
   }
@@ -86,10 +90,10 @@ async function updateConversion(start = 'left') {
     toCurrency = resultCurrency;
   }
 
-  if (!initialValue || initialValue === ',') {
+  if (!initialValue || initialValue === ',' || initialValue <= 0) {
     start === 'right' 
-      ? sourceInput.value = 0 
-      : resultInput.value = 0;
+      ? sourceInput.value = '' 
+      : resultInput.value = '';
     sourceInfo.textContent = '';
     resultInfo.textContent = '';
     return;
