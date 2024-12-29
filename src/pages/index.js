@@ -30,22 +30,22 @@ function handleKeyDown(event) {
     event.preventDefault();
   }
 
-  if (event.key === ',') {
-    const value = event.target.value;
-    if (value.includes(',')) {
+  if (event.key === ',' || event.key === '.') {
+    const value = event.target.value;  
+    if (value.includes(',') || value.includes('.')) {
       event.preventDefault();
     }
   }
 }
 
 // Форматирование: Удаление любых символов кроме цифр и одной запятой
+// (разрешено воодить точку, но она заменяется на запятую)
 function handleInput(event) {
   let value = event.target.value;
 
   value = value.replace(/[^\d,\.]/g, '').replace(/\./g, ',');
 
   const parts = value.split(',');
-  console.log('parts', parts);
   
   if (parts.length > 2) {
     value = parts[0] + ',' + parts.slice(1).join('');
