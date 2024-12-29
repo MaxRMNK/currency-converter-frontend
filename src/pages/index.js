@@ -21,63 +21,50 @@ function formatValue(value) {
   return value.toString().replace(/\./g, ',');
 }
 
-// Ограничение ввода в поле
-function validateInput(inputElement) {
-  inputElement.addEventListener('keydown', (event) => {
-    const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ','];
-    const isDigit = /\d/.test(event.key);
+// Ограничение нажатия клавиш для контроля за вводимыми данными
+function handleKeyDown(event) {
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ',', '.'];
+  const isDigit = /\d/.test(event.key);
 
-    if (!isDigit && !allowedKeys.includes(event.key)) {
+  if (!isDigit && !allowedKeys.includes(event.key)) {
+    event.preventDefault();
+  }
+
+  if (event.key === ',' || event.key === '.') {
+    const value = event.target.value;  
+    if (value.includes(',') || value.includes('.')) {
       event.preventDefault();
     }
+  }
+}
 
-    if (event.key === ',') {
-      const value = inputElement.value;
-      if (value.includes(',')) {
-        event.preventDefault();
-      }
-    }
-  });
+// Форматирование: Удаление любых символов кроме цифр и одной запятой
+// (разрешено воодить точку, но она заменяется на запятую)
+function handleInput(event) {
+  let value = event.target.value;
 
-  inputElement.addEventListener('input', () => {
-    let value = inputElement.value;
+  value = value.replace(/[^\d,\.]/g, '').replace(/\./g, ',');
 
-    value = value.replace(/[^\d,]/g, '');
+  const parts = value.split(',');
+  
+  if (parts.length > 2) {
+    value = parts[0] + ',' + parts.slice(1).join('');
+  }
 
-    const parts = value.split(',');
-    if (parts.length > 2) {
-      value = parts[0] + ',' + parts.slice(1).join('');
-    }
+  event.target.value = value;
+}
 
-    inputElement.value = value;
-  });
+// Ограничение ввода в поле
+function validateInput(inputElement) {
+  inputElement.addEventListener('keydown', handleKeyDown);
+  inputElement.addEventListener('input', handleInput);
 }
 
 // Получение данных курса
 async function fetchExchangeRate(from, to, amount) {
   const amountWithDot = String(amount).replace(',', '.');
-  // console.log(amountWithDot)
-
-  // Наше API (расскоментить при готовом бэке)
   const response = await fetch(`https://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amountWithDot}`);
-  
-  // Тестовый API удалить строчки от сюда
-  // const myHeaders = new Headers();
-  // myHeaders.append("apikey", "o6ucw6SxuL6ioWLv6DYCzmYMuXndpfgG");
-
-  // const requestOptions = {
-  //   method: 'GET',
-  //   redirect: 'follow',
-  //   headers: myHeaders,
-  // };
-
-  // const response = await fetch(
-  //   `https://api.apilayer.com/exchangerates_data/convert?to=${to}&from=${from}&amount=${amount}`,
-  //   requestOptions
-  // );
-  // до сюда
-
-  const data = await response.json();
+    const data = await response.json();
   return data;
 }
 
@@ -103,10 +90,10 @@ async function updateConversion(start = 'left') {
     toCurrency = resultCurrency;
   }
 
-  if (!initialValue || initialValue === ',') {
+  if (!initialValue || initialValue === ',' || initialValue <= 0) {
     start === 'right' 
-      ? sourceInput.value = 0 
-      : resultInput.value = 0;
+      ? sourceInput.value = '' 
+      : resultInput.value = '';
     sourceInfo.textContent = '';
     resultInfo.textContent = '';
     return;
@@ -147,8 +134,6 @@ swapButton.addEventListener('click', () => {
   swapCurrencies();
   updateConversion();
 });
-
-// swapButton.addEventListener('click', swapCurrencies);
 
 // Обработчики для изменения радиокнопок и ввода значений
 sourceRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
