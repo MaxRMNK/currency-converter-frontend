@@ -108,7 +108,6 @@ $border-focus-color: rgba(0, 0, 0, 1);
     // background-repeat: no-repeat;
     // background-position: left center;
     // background-size: 32px;
-    color: $font-color;
     opacity: 1;
     transition: opacity linear 0.1s;
 
@@ -117,16 +116,9 @@ $border-focus-color: rgba(0, 0, 0, 1);
     }
   }
 
-  // &__link_vk {
-  //   background-color: #fc0;
-  //   -webkit-mask-image: url('/vk-icon.svg');
-  //   mask-image: url('/vk-icon.svg');
-  //   background-image: url('/vk-icon.svg');
-  // }
-
-  // &__link_tg {
-  //   background-image: url('/tg-icon.svg');
-  // }
+  &__image {
+    color: $font-color;
+  }
 }
 
 .content {
