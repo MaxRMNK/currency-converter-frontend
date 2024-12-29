@@ -148,8 +148,6 @@ swapButton.addEventListener('click', () => {
   updateConversion();
 });
 
-// swapButton.addEventListener('click', swapCurrencies);
-
 // Обработчики для изменения радиокнопок и ввода значений
 sourceRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
 resultRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
