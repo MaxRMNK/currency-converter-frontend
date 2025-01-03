@@ -52,19 +52,25 @@ function handleKeyDown(event) {
 function handleInput(event) {
   let value = event.target.value;
   
-  value = value.replace(/[^\d,\.]/g, '')
-    .replace(/\./g, ',')
-    .replace(/^00/, '0');
+  value = value.replace(/[^\d,\.]/g, '').replace(/\./g, ',');
+
+  // Удаляет ноль в начале, если после него идет цифра
+  if (value.match(/^0[0-9]/)) {
+    value = value.substring(1);
+  }
+
+  // Добавляет ноль в начало, если первый символ запятая
+  if (value.startsWith(',')) {
+    value = '0' + value;
+  }
 
   const parts = value.split(',');
 
-  if (parts.length > 1 && parts[0] === '') {
-    value = '0,' + parts[1];
-  }
-
+  // Удаляет из строки все запятые кроме первой
   if (parts.length > 2) {
     value = parts[0] + ',' + parts.slice(1).join('');
   }
+
 
   event.target.value = value;
 }
