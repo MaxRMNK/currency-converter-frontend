@@ -16,14 +16,22 @@ const symbol = {
   'EUR': '€',
 };
 
-// Замена точки на запятую
+// Получение данных курса
+async function fetchExchangeRate(from, to, amount) {
+  const amountWithDot = String(amount).replace(',', '.');
+  const response = await fetch(`https://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amountWithDot}`);
+    const data = await response.json();
+  return data;
+}
+
+// Форматирование перед выводом
 function formatValue(value) {
   return value.toString().replace(/\./g, ',');
 }
 
 // Ограничение нажатия клавиш для контроля за вводимыми данными
 function handleKeyDown(event) {
-  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', ',', '.'];
+  const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Home', 'End', ',', '.'];
   const isDigit = /\d/.test(event.key);
 
   if (!isDigit && !allowedKeys.includes(event.key)) {
@@ -40,32 +48,25 @@ function handleKeyDown(event) {
 
 // Форматирование: Удаление любых символов кроме цифр и одной запятой
 // (разрешено воодить точку, но она заменяется на запятую)
+// + запрет ввода более одного нуля перед запятой.
 function handleInput(event) {
   let value = event.target.value;
-
-  value = value.replace(/[^\d,\.]/g, '').replace(/\./g, ',');
+  
+  value = value.replace(/[^\d,\.]/g, '')
+    .replace(/\./g, ',')
+    .replace(/^00/, '0');
 
   const parts = value.split(',');
-  
+
+  if (parts.length > 1 && parts[0] === '') {
+    value = '0,' + parts[1];
+  }
+
   if (parts.length > 2) {
     value = parts[0] + ',' + parts.slice(1).join('');
   }
 
   event.target.value = value;
-}
-
-// Ограничение ввода в поле
-function validateInput(inputElement) {
-  inputElement.addEventListener('keydown', handleKeyDown);
-  inputElement.addEventListener('input', handleInput);
-}
-
-// Получение данных курса
-async function fetchExchangeRate(from, to, amount) {
-  const amountWithDot = String(amount).replace(',', '.');
-  const response = await fetch(`https://currency-converter.hopto.org/api/convert?from=${from}&to=${to}&amount=${amountWithDot}`);
-    const data = await response.json();
-  return data;
 }
 
 // Обновление данных конвертации
@@ -81,31 +82,25 @@ async function updateConversion(start = 'left') {
   let toCurrency;
 
   if (start === 'right') {
-    initialValue = resultValue;
+    initialValue = parseFloat(resultValue.replace(',', '.'));
     fromCurrency = resultCurrency;
     toCurrency = sourceCurrency;
   } else {
-    initialValue = sourceValue;
+    initialValue = parseFloat(sourceValue.replace(',', '.'));
     fromCurrency = sourceCurrency;
     toCurrency = resultCurrency;
   }
 
-  if (!initialValue || initialValue === ',' || initialValue <= 0) {
-    start === 'right' 
-      ? sourceInput.value = '' 
-      : resultInput.value = '';
-    sourceInfo.textContent = '';
-    resultInfo.textContent = '';
-    return;
-  }
+ if (!initialValue || initialValue <= 0 || isNaN(initialValue)) {
+   start === 'right' 
+     ? sourceInput.value = '' 
+     : resultInput.value = '';
+   sourceInfo.textContent = '';
+   resultInfo.textContent = '';
+   return;
+ }
 
-  if (initialValue.includes(',') && !/\d/.test(initialValue.split(',')[1])) {
-    return;
-  }
-
-  const numericValue = parseFloat(initialValue.replace(',', '.'));
-
-  if (isNaN(numericValue) || sourceCurrency === resultCurrency) {
+  if (sourceCurrency === resultCurrency) {
     resultInput.value = formatValue(initialValue);
     sourceInfo.textContent = formatValue(`1 ${symbol[sourceCurrency]} = 1 ${symbol[resultCurrency]}`);
     resultInfo.textContent = formatValue(`1 ${symbol[resultCurrency]} = 1 ${symbol[sourceCurrency]}`);
@@ -124,6 +119,7 @@ async function updateConversion(start = 'left') {
     const rate = data.info.rate;
     sourceInfo.textContent = formatValue(`1 ${symbol[fromCurrency]} = ${rate.toFixed(2)} ${symbol[toCurrency]}`);
     resultInfo.textContent = formatValue(`1 ${symbol[toCurrency]} = ${(1 / rate).toFixed(2)} ${symbol[fromCurrency]}`);
+  
   } catch (error) {
     console.error('Ошибка получения данных:', error);
   }
@@ -135,15 +131,20 @@ swapButton.addEventListener('click', () => {
   updateConversion();
 });
 
-// Обработчики для изменения радиокнопок и ввода значений
+// Слушатели изменений радиокнопок и полей ввода
 sourceRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
 resultRadios.forEach((radio) => radio.addEventListener('change', updateConversion));
 
-sourceInput.addEventListener('input', updateConversion);
-// sourceInput.addEventListener('input', () => updateConversion('left'));
-resultInput.addEventListener('input', () => updateConversion('right'));
+sourceInput.addEventListener('keydown', handleKeyDown);
+resultInput.addEventListener('keydown', handleKeyDown);
 
-validateInput(sourceInput);
-validateInput(resultInput);
+sourceInput.addEventListener('input', (e) => {
+  handleInput(e);
+  updateConversion();
+});
+resultInput.addEventListener('input', (e) => {
+  handleInput(e);
+  updateConversion('right')
+});
 
 updateConversion();
